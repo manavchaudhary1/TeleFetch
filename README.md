@@ -135,7 +135,9 @@ curl -X GET http://localhost:8080/api/authorization/status
 
 **2. Using Telegram Desktop Client**
 1. Open Any Telegram CLient ; i personally recommend [64Gram](https://flathub.org/apps/io.github.tdesktop_x64.TDesktop).
-2. Open Channel you want to download documents from ![](https://github.com/manavchaudhary1/TeleFetch/blob/master/img/example.png)
+2. Open Channel you want to download documents from
+
+   ![](https://github.com/manavchaudhary1/TeleFetch/blob/master/img/example.png)
 
 <a name="api"></a>
 ## Running Api calls
