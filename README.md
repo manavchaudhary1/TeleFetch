@@ -67,7 +67,7 @@ Open pom.xml and edit absolute path of compiled TDLib shared library
         </plugins>
     </build>
 ```
-You can find compiled libraries for several platforms in [libs](https://github.com/manavchaudhary1) directory of the source code from the latest release.
+You can find compiled libraries for several platforms in [libs](https://github.com/manavchaudhary1/libs) directory of the source code from the latest release.
 If you haven't found a library for your OS and architecture, you can build it yourself following this [instructions](https://github.com/p-vorobyev/spring-boot-starter-telegram/blob/master/libs/build/readme.md).
 
 
@@ -135,7 +135,9 @@ curl -X GET http://localhost:8080/api/authorization/status
 
 **2. Using Telegram Desktop Client**
 1. Open Any Telegram CLient ; i personally recommend [64Gram](https://flathub.org/apps/io.github.tdesktop_x64.TDesktop).
-2. Open Channel you want to download documents from ![](https://github.com/manavchaudhary1/)
+2. Open Channel you want to download documents from
+
+   ![](https://github.com/manavchaudhary1/TeleFetch/blob/master/img/example.png)
 
 <a name="api"></a>
 ## Running Api calls
