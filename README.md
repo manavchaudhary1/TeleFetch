@@ -25,6 +25,8 @@ TDLib [depends](https://github.com/tdlib/td#dependencies) on:
 - C++14 compatible compiler (Clang 3.4+, GCC 4.9+, MSVC 19.0+ (Visual Studio 2015+), Intel C++ Compiler 17+)
 - OpenSSL
 - zlib
+
+**Additional Requirement**
 - curl
 - Maven (Optional)
 - jq
