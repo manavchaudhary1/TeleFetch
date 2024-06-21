@@ -67,7 +67,7 @@ Open pom.xml and edit absolute path of compiled TDLib shared library
         </plugins>
     </build>
 ```
-You can find compiled libraries for several platforms in [libs](https://github.com/manavchaudhary1/libs) directory of the source code from the latest release.
+You can find compiled libraries for several platforms in [libs](https://github.com/manavchaudhary1/TeleFetch/tree/master/libs) directory of the source code from the latest release.
 If you haven't found a library for your OS and architecture, you can build it yourself following this [instructions](https://github.com/p-vorobyev/spring-boot-starter-telegram/blob/master/libs/build/readme.md).
 
 
