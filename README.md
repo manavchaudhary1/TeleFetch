@@ -37,7 +37,7 @@ TDLib [depends](https://github.com/tdlib/td#dependencies) on:
 
 1) Downloading Dependencies for TDLib for Linux 
 ```
-sudo apt-get install zlib1g-dev libssl-dev
+sudo apt-get install zlib1g-dev libssl-dev curl grep jq
 ```
 2) Clone source code:
 ```shell
