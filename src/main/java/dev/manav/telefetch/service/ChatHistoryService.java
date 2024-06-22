@@ -25,11 +25,11 @@ public class ChatHistoryService {
         this.telegramClient = telegramClient;
     }
 
-    public ChatResponse getChatHistory(ChatHistoryTemplate chatId, ChatHistoryTemplate limit) {
-        log.info("Fetching chat history for chatId: {}", chatId.getChatId());
+    public ChatResponse getChatHistory(ChatHistoryTemplate chatHistoryTemplate) {
+        log.info("Fetching chat history for chatId: {}", chatHistoryTemplate.getChatId());
         updateChatList();
 
-        TdApi.GetChatHistory request = new TdApi.GetChatHistory(chatId.getChatId(), 0, 0, limit.getLimit(), false);
+        TdApi.GetChatHistory request = new TdApi.GetChatHistory(chatHistoryTemplate.getChatId(), 0, 0, chatHistoryTemplate.getLimit(), false);
         try {
             TdApi.Messages messages = telegramClient.sendSync(request);
             List<MessageInfo> filteredMessages = filterMessages(messages);
@@ -81,4 +81,5 @@ public class ChatHistoryService {
             throw new RuntimeException("Failed to update chat list: " + e.getMessage());
         }
     }
+
 }

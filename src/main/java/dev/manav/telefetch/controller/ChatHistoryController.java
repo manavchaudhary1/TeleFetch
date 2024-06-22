@@ -23,10 +23,10 @@ public class ChatHistoryController {
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ChatResponse> chatHistory(@RequestBody ChatHistoryTemplate chatId, @RequestBody ChatHistoryTemplate limit) {
-        log.info("chatHistory endpoint called with chatId: {}", chatId.getChatId());
+    public ResponseEntity<ChatResponse> chatHistory(@RequestBody ChatHistoryTemplate request) {
+        log.info("chatHistory endpoint called with chatId: {}", request.getChatId());
         try {
-            ChatResponse response = chatHistoryService.getChatHistory(chatId, limit);
+            ChatResponse response = chatHistoryService.getChatHistory(request);
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             log.error("Error fetching chat history: {}", e.getMessage(), e);
