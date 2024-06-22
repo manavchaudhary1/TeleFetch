@@ -41,7 +41,7 @@ sudo apt-get install zlib1g-dev libssl-dev curl grep jq
 ```
 2) Clone source code:
 ```shell
-git clone https://github.com/manavchaudhary1/Telefetch.git
+git clone https://github.com/manavchaudhary1/TeleFetch.git
 cd TeleFetch
 ```
 
