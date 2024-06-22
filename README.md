@@ -28,7 +28,7 @@ TDLib [depends](https://github.com/tdlib/td#dependencies) on:
 
 **Additional Requirement**
 - curl
-- Maven (Optional)
+- Maven
 - jq
 - grep (optional)
 
@@ -42,33 +42,17 @@ sudo apt-get install zlib1g-dev libssl-dev
 2) Clone source code:
 ```shell
 git clone https://github.com/manavchaudhary1/telefetch.git
+cd TeleFetch
 ```
 
-3) Install Starter Jar
-```
-cd TeleFetch
-./mvnw install:install-file -Dfile=libs/spring-boot-starter-telegram-1.11.0-sources.jar -DgroupId=dev.voroby -DartifactId=spring-boot-starter-telegram  -Dversion=1.11.0 -Dpackaging=jar
-```
 
 4) Install mvn repo
 ```bash
-./mvnw clean install -DskipTests
+./mvnw clean install
 ```
 
-Open pom.xml and edit absolute path of compiled TDLib shared library 
-```
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <jvmArguments>-Djava.library.path=</absolute/path/to/library></jvmArguments>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-```
+> pom is configured for linux_x64 OS.
+
 You can find compiled libraries for several platforms in [libs](https://github.com/manavchaudhary1/TeleFetch/tree/master/libs) directory of the source code from the latest release.
 If you haven't found a library for your OS and architecture, you can build it yourself following this [instructions](https://github.com/p-vorobyev/spring-boot-starter-telegram/blob/master/libs/build/readme.md).
 

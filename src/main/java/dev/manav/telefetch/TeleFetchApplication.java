@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AlphaReApplication {
+public class TeleFetchApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AlphaReApplication.class, args);
+        SpringApplication.run(TeleFetchApplication.class, args);
     }
-
 }
