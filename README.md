@@ -48,7 +48,7 @@ cd TeleFetch
 
 4) Install mvn repo
 ```bash
-./mvnw clean install
+mvn clean install
 ```
 
 > pom is configured for linux_x64 OS.
