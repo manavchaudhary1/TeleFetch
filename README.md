@@ -178,3 +178,17 @@ bash {script_name}.sh
 Enter fileIds separated by space:
 12345 67890 11223
 ```
+3) Checking Download Progress
+
+After initiating downloading file , we can check download progress , using:
+```
+curl -X GET http://localhost:8080/api/download/progress/{fileId}  
+```
+
+Response will we like this
+```text
+{"progress":90,"expectedSize":137193473,"downloadedSize":123863040,"fileId":3606,"status":"In Progress"}
+```
+```text
+{"progress":100,"expectedSize":137193473,"downloadedSize":137193473,"fileId":3606,"status":"Completed"}
+```
