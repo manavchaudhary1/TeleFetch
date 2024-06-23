@@ -18,7 +18,6 @@ import java.util.List;
 @Slf4j
 public class ChatHistoryService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ChatHistoryService.class);
     private final TelegramClient telegramClient;
 
     public ChatHistoryService(TelegramClient telegramClient) {
@@ -75,9 +74,9 @@ public class ChatHistoryService {
     public void updateChatList() {
         try {
             TdApi.Chats chats = telegramClient.sendSync(new TdApi.GetChats(new TdApi.ChatListMain(), 500));
-            logger.info("Chat list updated with {} chats", chats.totalCount);
+            log.info("Chat list updated with {} chats", chats.totalCount);
         } catch (TelegramClientTdApiException e) {
-            logger.error("Error updating chat list: {}", e.getMessage(), e);
+            log.error("Error updating chat list: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to update chat list: " + e.getMessage());
         }
     }
