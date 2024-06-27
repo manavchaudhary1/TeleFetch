@@ -1,4 +1,4 @@
-package dev.manav.telefetch.view;
+package dev.manav.telefetch.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
