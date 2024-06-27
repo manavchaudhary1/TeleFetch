@@ -10,12 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping(value = "/api/authorization")
 public class AuthorizationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
 
 
     private ClientAuthorizationState authorizationState;
@@ -28,13 +27,13 @@ public class AuthorizationController {
 
     @PostMapping(value = "/code", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateConfirmationCode(@RequestBody @Valid Credential credential) {
-        logger.info("Received code: {}", credential.value);
+        log.info("Received code: {}", credential.value);
         authorizationState.checkAuthenticationCode(credential.value);
     }
 
     @PostMapping(value = "/password", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updatePassword(@RequestBody @Valid Credential credential) {
-        logger.info("Received password: {}", credential.value);
+        log.info("Received password: {}", credential.value);
         authorizationState.checkAuthenticationPassword(credential.value);
     }
 
@@ -42,7 +41,7 @@ public class AuthorizationController {
     @ResponseBody
     public String authorizationStatus() {
         boolean authorized = authorizationState.haveAuthorization();
-        logger.info("Authorization status: {}", authorized ? "AUTHORIZED" : "NOT_AUTHORIZED");
+        log.info("Authorization status: {}", authorized ? "AUTHORIZED" : "NOT_AUTHORIZED");
         return authorized ? "AUTHORIZED" : "NOT_AUTHORIZED";
     }
 }

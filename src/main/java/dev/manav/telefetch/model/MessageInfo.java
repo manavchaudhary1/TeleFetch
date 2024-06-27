@@ -11,6 +11,8 @@ public class MessageInfo {
     private String mimeType;
     private double size; // size in megabytes
     private String caption;
+    @Setter
+    private double progress;
 
     public MessageInfo(int id, String filename, String mimeType, long sizeInBytes, String caption) {
         this.id = id;

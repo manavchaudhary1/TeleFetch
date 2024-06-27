@@ -9,6 +9,7 @@ Build upon [SpringBoot](https://spring.io/projects/spring-boot) with help of [Sp
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Configuration properties](#configuration)
+- [Login and Authorization](#login)
 - [Running Api calls](#api)
 
 <a name="requirements"></a>
@@ -70,19 +71,27 @@ The very first step requires you to obtain a valid Telegram API key (API id/hash
 
 Mandatory properties for autoconfiguration:
 
-> Edit in src/main/resources/application.properties
+```bash
+chmod +x edit_entries.sh
+bash edit_entries.sh
+```
 
-| property                                          | type   | description                                                                                                      |
-|---------------------------------------------------|--------|------------------------------------------------------------------------------------------------------------------|
-| `spring.telegram.client.api-id`                   | int    | Your Api Id                                                                                                      |
-| `spring.telegram.client.api-hash`                 | String | Your Api Hash                                                                                                    |
-| `spring.telegram.client.phone`                    | String | The phone number of the user, in international format.                                                           |
-| `spring.telegram.client.database-encryption-key`  | String | Encryption key for the database. If the encryption key is invalid, then an error with code 401 will be returned. |
+| property                     | type   | description                                                                                                      |
+|------------------------------|--------|------------------------------------------------------------------------------------------------------------------|
+| `${TELEGRAM_API_ID}`         | int    | Your Api Id                                                                                                      |
+| `${TELEGRAM_API_HASH}`       | String | Your Api Hash                                                                                                    |
+| `${TELEGRAM_PHONE}`          | String | The phone number of the user, in international format.                                                           |
+| `${TELEGRAM_ENCRYPTION_KEY}` | String | Encryption key for the database. If the encryption key is invalid, then an error with code 401 will be returned. |
+
+
+<a name="login"></a>
+## Login and Authorization
 
 Run TeleFetch :
 ```
 mvn spring-boot:run 
 ```
+
 - application log
 
 ```text
@@ -109,6 +118,10 @@ After completing authentication you can check weather you were authorized or not
 curl -X GET http://localhost:8080/api/authorization/status
 ```
 
+Now we are ready to fetch chat history and download files from telegram.
+We can either use api calls or use web interface to download files.
+Head over to [http://localhost:8080](http://localhost:8080) to use web interface and for api calls refer [Api calls](#api).
+
 **Getting chat id:**
 
 **1. Using web telegram:**
@@ -124,6 +137,13 @@ curl -X GET http://localhost:8080/api/authorization/status
 2. Open Channel you want to download documents from
 
    ![](https://github.com/manavchaudhary1/TeleFetch/blob/master/img/example.png)
+
+**3. Getting Chat ID from Telefetch Web Interface**
+1. Open [localhost:8080/groupid](http://localhost:8080/groupid)
+   ![](https://github.com/manavchaudhary1/TeleFetch/blob/master/img/groupid.png)
+2. TeleFetch will show you recent 1000 chats you have been part of.
+3. We can search and copy ChatId from here and head to [localhost:8080/download](https://localhost:8008/download) and start downloading chats.
+
 
 <a name="api"></a>
 ## Running Api calls
@@ -182,13 +202,25 @@ Enter fileIds separated by space:
 
 After initiating downloading file , we can check download progress , using:
 ```
-curl -X GET http://localhost:8080/api/download/progress/{fileId}  
+curl -X GET http://localhost:8080/api/download/progress | jq
 ```
 
 Response will we like this
 ```text
-{"progress":90,"expectedSize":137193473,"downloadedSize":123863040,"fileId":3606,"status":"In Progress"}
-```
-```text
-{"progress":100,"expectedSize":137193473,"downloadedSize":137193473,"fileId":3606,"status":"Completed"}
+[
+    {
+        "progress":90,
+        "expectedSize":137193473,
+        "downloadedSize":123863040,
+        "fileId":3606,
+        "status":"In Progress"
+    }.
+    {
+        "progress":100,
+        "expectedSize":137193473,
+        "downloadedSize":137193473,
+        "fileId":3606,
+        "status":"Completed"
+    }
+]
 ```

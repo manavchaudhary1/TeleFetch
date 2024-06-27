@@ -13,7 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
-@Component
 public class DownloadService {
 
     private final TelegramClient telegramClient;
@@ -22,7 +21,7 @@ public class DownloadService {
         this.telegramClient = telegramClient;
     }
 
-    private record FileDownloadProgress(
+    public record FileDownloadProgress(
             long fileId,
             long expectedSize,
             long downloadedSize,
@@ -43,10 +42,9 @@ public class DownloadService {
                         try {
                             long approximateFileSize = getApproximateFileSize(file);
                             long downloadedSize = (file.local != null) ? file.local.downloadedSize : 0;
-                            var downloadProgress = new FileDownloadProgress(file.id, approximateFileSize, downloadedSize,false);
+                            var downloadProgress = new FileDownloadProgress(file.id, approximateFileSize, downloadedSize, false);
                             fileIdToFileDownloadProgress.put(file.id, downloadProgress);
-                            log.info("Initial progress added to map for file ID: {}",
-                                    file.id);
+                            log.info("Initial progress added to map for file ID: {}", file.id);
                         } catch (Exception e) {
                             log.error("Error while adding initial progress to map for file ID {}: {}", file.id, e.getMessage(), e);
                         }
@@ -57,6 +55,14 @@ public class DownloadService {
                     return null;
                 });
         log.info("Exiting downloadFile method for file ID: {}", file.id);
+    }
+
+    public Map<String, Object> getAllDownloadProgress() {
+        Map<String, Object> allProgress = new HashMap<>();
+        for (Map.Entry<Integer, FileDownloadProgress> entry : fileIdToFileDownloadProgress.entrySet()) {
+            allProgress.put(String.valueOf(entry.getKey()), getFileDownloadProgress(entry.getKey()));
+        }
+        return allProgress;
     }
 
     public Map<String, Object> getFileDownloadProgress(int fileId) {
@@ -72,6 +78,10 @@ public class DownloadService {
             if (progress.isCompleted()) {
                 progressInfo.put("status", "Completed");
                 progressInfo.put("progress", 100);
+            } else if (progress.expectedSize() == 0) {
+                progressInfo.put("status", "Unknown");
+                progressInfo.put("progress", 0);
+                log.warn("Expected size is zero for file ID: {}", fileId);
             } else {
                 progressInfo.put("status", "In Progress");
                 progressInfo.put("progress", (progress.downloadedSize() * 100) / progress.expectedSize());
