@@ -37,6 +37,11 @@ public class DownloadFileController {
         }
     }
 
+    @GetMapping("/progress")
+    public ResponseEntity<Map<String, Object>> getAllDownloadProgress() {
+        return ResponseEntity.ok(downloadService.getAllDownloadProgress());
+    }
+
     @GetMapping("/progress/{fileId}")
     public ResponseEntity<Map<String, Object>> getFileDownloadProgress(@PathVariable int fileId) {
         Map<String, Object> progressInfo = downloadService.getFileDownloadProgress(fileId);
