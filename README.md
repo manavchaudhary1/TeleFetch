@@ -72,8 +72,8 @@ The very first step requires you to obtain a valid Telegram API key (API id/hash
 Mandatory properties for autoconfiguration:
 
 ```bash
-chmod +x edit_properties.sh
-bash edit_properties.sh
+chmod +x edit_entries.sh
+bash edit_entries.sh
 ```
 
 | property                     | type   | description                                                                                                      |
