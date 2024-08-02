@@ -133,7 +133,7 @@ Head over to [http://localhost:8080](http://localhost:8080) to use web interface
     - `https://web.telegram.org/?legacy=1#/im?p=c1301254321_6925449697188775560` here take `1301254321` and add `-100` to the start of the id => `-1001301254321`.
 
 **2. Using Telegram Desktop Client**
-1. Open Any Telegram CLient ; i personally recommend [64Gram](https://flathub.org/apps/io.github.tdesktop_x64.TDesktop).
+1. Open Any Telegram CLient ; i personally recommend [64Gram](https://github.com/TDesktop-x64/tdesktop).
 2. Open Channel you want to download documents from
 
    ![](https://github.com/manavchaudhary1/TeleFetch/blob/master/img/example.png)
