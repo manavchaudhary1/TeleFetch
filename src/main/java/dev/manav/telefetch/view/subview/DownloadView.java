@@ -67,7 +67,7 @@ public class DownloadView extends VerticalLayout {
         String url = "http://localhost:8080/api/chat";
         try {
             Map<String, Object> request = new HashMap<>();
-            request.put("chatId", Long.parseLong(channelId));
+            request.put("chatId", Long.parseLong(channelId.trim()));
             request.put("limit", Integer.parseInt(limit));
 
             ChatResponse response = restTemplate.postForObject(url, request, ChatResponse.class);

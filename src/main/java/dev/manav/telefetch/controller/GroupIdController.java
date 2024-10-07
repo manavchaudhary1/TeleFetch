@@ -20,7 +20,6 @@ public class GroupIdController {
 
     @GetMapping("/chatTitles")
     public List<GroupInfo> getMyChats() {
-        List<GroupInfo> chats = groupIdService.getMyChats();
-        return chats;
+        return groupIdService.getMyChats();
     }
 }
