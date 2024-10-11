@@ -72,7 +72,7 @@ public class ChatHistoryService {
 
     public void updateChatList() {
         try {
-            TdApi.Chats chats = telegramClient.sendSync(new TdApi.GetChats(new TdApi.ChatListMain(), 100));
+            TdApi.Chats chats = telegramClient.sendSync(new TdApi.GetChats(new TdApi.ChatListMain(), 500));
             log.info("Chat list updated with {} chats", chats.totalCount);
         } catch (TelegramClientTdApiException e) {
             log.error("Error updating chat list: {}", e.getMessage(), e);
