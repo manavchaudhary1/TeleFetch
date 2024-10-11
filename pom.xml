@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -18,6 +17,78 @@
         <java.version>21</java.version>
         <vaadin.version>24.4.3</vaadin.version>
     </properties>
+
+
+    <profiles>
+        <profile>
+            <id>linux-arm64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>Linux</name>
+                    <arch>arm</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.library.path>${project.basedir}/libs/linux_arm64</os.library.path>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>linux-x64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>Linux</name>
+                    <arch>x86_64</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.library.path>${project.basedir}/libs/linux_x64</os.library.path>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>macos-silicon</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>Mac OS X</name>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.library.path>${project.basedir}/libs/macos_silicon</os.library.path>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>macos-x64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>Mac OS X</name>
+                    <arch>x86_64</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.library.path>${project.basedir}/libs/macos_x64</os.library.path>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>windows-x64</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <os.library.path>${project.basedir}/libs/windows_x64</os.library.path>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -32,12 +103,10 @@
 
     <repositories>
         <repository>
-            <id>Telegram-Starter-Repo-Install</id>
-            <name>In Project Repo</name>
-            <url>file://${project.basedir}/libs</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/p-vorobyev/*</url>
         </repository>
     </repositories>
-
 
     <dependencies>
         <dependency>
@@ -71,9 +140,9 @@
         <dependency>
             <groupId>dev.voroby</groupId>
             <artifactId>spring-boot-starter-telegram</artifactId>
-            <version>1.11.0</version>
+            <version>1.12.0</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-spring-boot-starter</artifactId>
@@ -86,7 +155,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <jvmArguments>-Djava.library.path=${project.basedir}/libs/linux_x64</jvmArguments>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <jvmArguments>-Djava.library.path=${os.library.path}</jvmArguments>
                 </configuration>
             </plugin>
             <plugin>
