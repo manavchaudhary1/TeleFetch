@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class ChatHistoryTemplate {
     private long chatId;
+    private int fromMessageId;
     private int limit;
 }
