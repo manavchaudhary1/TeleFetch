@@ -19,12 +19,14 @@ cmake --build . --target install
 cd ../../..
 
 if [ $(uname -a | grep -c 'arm64') -eq 1 ]; then
-  rm ../../macos_silicon/libtdjni.dylib
-  cp tdlib/bin/libtdjni.dylib ../../macos_silicon
+  rm -rf ../../macos_silicon
+  mkdir ../../macos_silicon
+  cp tdlib/bin/libtdjni.dylib ../../macos_silicon/
   echo "Library saved to project directory: libs/macos_silicon"
 else
-  rm ../../macos_x64/libtdjni.dylib
-  cp tdlib/bin/libtdjni.dylib ../../macos_x64
+  rm -rf  ../../macos_x64
+  mkdir ../../macos_x64
+  cp tdlib/bin/libtdjni.dylib ../../macos_x64/
   echo "Library saved to project directory: libs/macos_x64"
 fi
 

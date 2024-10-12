@@ -31,7 +31,8 @@ cmake -A x64 -DCMAKE_INSTALL_PREFIX:PATH=../../../tdlib -DCMAKE_TOOLCHAIN_FILE:F
 cmake --build . --target install --config Release
 cd ../../..
 rm ../../windows_x64/*.dll
-cp tdlib/bin/*.dll ../../windows_x64
+mkdir ../../windows_x64
+cp tdlib/bin/*.dll ../../windows_x64/
 echo "Library saved to project directory: libs/windows_x64"
 cd ..
 rm -rf td

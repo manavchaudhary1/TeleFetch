@@ -26,7 +26,7 @@ if [ $(uname -a | grep -c 'aarch64') -eq 1 ]; then
 else
   rm -rf ../../linux_x64
   mkdir ../../linux_x64
-  cp tdlib/bin/libtdjni.so ../../linux_x64
+  cp tdlib/bin/libtdjni.so ../../linux_x64/
   echo "Library saved to project directory: libs/linux_x64"
 fi
 
