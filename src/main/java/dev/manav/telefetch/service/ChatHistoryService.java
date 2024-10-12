@@ -3,7 +3,7 @@ package dev.manav.telefetch.service;
 import dev.manav.telefetch.model.ChatHistoryTemplate;
 import dev.manav.telefetch.model.ChatResponse;
 import dev.manav.telefetch.model.MessageInfo;
-import dev.voroby.springframework.telegram.client.TdApi;
+import org.drinkless.tdlib.TdApi;
 import dev.voroby.springframework.telegram.client.TelegramClient;
 import dev.voroby.springframework.telegram.exception.TelegramClientTdApiException;
 import lombok.extern.slf4j.Slf4j;
