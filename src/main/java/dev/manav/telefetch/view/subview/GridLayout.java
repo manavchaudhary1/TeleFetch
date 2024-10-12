@@ -42,6 +42,7 @@ public class GridLayout extends VerticalLayout {
         grid.setAllRowsVisible(true);
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
         grid.addColumn(MessageInfo::getId).setHeader("ID").setWidth("100px").setFlexGrow(0);
+        grid.addColumn(MessageInfo::getMessageId).setHeader("Message ID").setWidth("120px").setFlexGrow(0);
         grid.addColumn(MessageInfo::getFilename).setHeader("Filename").setAutoWidth(true);
         grid.addColumn(MessageInfo::getSize).setHeader("Size in MB").setWidth("150px").setFlexGrow(0);
         grid.addColumn(MessageInfo::getCaption).setHeader("Caption").setFlexGrow(1);

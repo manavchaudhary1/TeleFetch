@@ -24,6 +24,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 public class DownloadView extends VerticalLayout {
     private final TextField channelIdField;
     private final TextField limitField;
+    private final TextField messageIdField;
     private final GridLayout messagesGrid;
 
     @Autowired
@@ -41,10 +42,12 @@ public class DownloadView extends VerticalLayout {
 
         channelIdField = new TextField("Channel ID");
         limitField = new TextField("Limit");
+        messageIdField = new TextField("From Message ID");
+        messageIdField.setValue("0");
         Button retrieveButton = new Button("Retrieve Messages", event -> retrieveMessages());
         messagesGrid = new GridLayout(restTemplate);
 
-        HorizontalLayout inputLayout = new HorizontalLayout(channelIdField, limitField, retrieveButton);
+        HorizontalLayout inputLayout = new HorizontalLayout(channelIdField, limitField, messageIdField, retrieveButton);
         inputLayout.setAlignItems(FlexComponent.Alignment.BASELINE);
         inputLayout.setPadding(true);
 
@@ -57,6 +60,7 @@ public class DownloadView extends VerticalLayout {
     private void retrieveMessages() {
         String channelId = channelIdField.getValue();
         String limit = limitField.getValue();
+        String messageId = messageIdField.getValue();
 
         if (channelId.isEmpty() || limit.isEmpty()) {
             Notification notification = Notification.show("Please fill in both fields");
@@ -69,6 +73,7 @@ public class DownloadView extends VerticalLayout {
             Map<String, Object> request = new HashMap<>();
             request.put("chatId", Long.parseLong(channelId.trim()));
             request.put("limit", Integer.parseInt(limit));
+            request.put("fromMessageId", Long.parseLong(messageId));
 
             ChatResponse response = restTemplate.postForObject(url, request, ChatResponse.class);
             if (response != null) {

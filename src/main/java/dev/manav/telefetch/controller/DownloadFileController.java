@@ -1,7 +1,7 @@
 package dev.manav.telefetch.controller;
 
 import dev.manav.telefetch.service.DownloadService;
-import dev.voroby.springframework.telegram.client.TdApi;
+import org.drinkless.tdlib.TdApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
