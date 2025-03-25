@@ -8,18 +8,18 @@ Build upon [SpringBoot](https://spring.io/projects/spring-boot) with help of [Sp
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Configuration properties](#configuration)
-- [Login and Authorization](#login)
-- [Running Api calls](#api)
+- [Configuration properties](#configuration-properties)
+- [Login and Authorization](#login-and-authorization)
+- [Running Api calls](#running-api-calls)
 
 <a name="requirements"></a>
 ###  Requirements
-| Technology                   | Version                                                                               |
-|------------------------------|---------------------------------------------------------------------------------------|
-| JRE                          | `Java 21 ` and above                                                                  |
-| TDLib                        | [1.8.29](https://github.com/p-vorobyev/spring-boot-starter-telegram/blob/master/libs) |
-| Spring Boot                  | 3.3.0                                                                                 |
-| spring boot starter telegram | [1.11.0](https://github.com/p-vorobyev/spring-boot-starter-telegram/releases/tag/1.11.0)|
+| Technology                   | Version                                                                                  |
+|------------------------------|------------------------------------------------------------------------------------------|
+| JRE                          | `Java 21 ` and above                                                                     |
+| TDLib                        | [1.8.29](https://github.com/p-vorobyev/spring-boot-starter-telegram/blob/master/libs)    |
+| Spring Boot                  | 3.3.0                                                                                    |
+| spring boot starter telegram | [1.11.0](https://github.com/p-vorobyev/spring-boot-starter-telegram/releases/tag/1.11.0) |
 
 TDLib [depends](https://github.com/tdlib/td#dependencies) on:
 
@@ -38,33 +38,52 @@ TDLib [depends](https://github.com/tdlib/td#dependencies) on:
 
 1) Downloading Dependencies for TDLib for
 
-- Debian based distro
-```
-sudo apt-get install zlib1g-dev libssl-dev curl grep jq
-```
-- RedHat based distro
-```
-sudo dnf install zlib-devel openssl-devel curl grep jq
-```
-2) Clone source code:
-```shell
-git clone https://github.com/manavchaudhary1/TeleFetch.git
-cd TeleFetch
-```
+   - Debian based distro
+   ```
+   sudo apt-get install zlib1g-dev libssl-dev curl grep jq
+   ```
+   - RedHat based distro
+   ```
+   sudo dnf install zlib-devel openssl-devel curl grep jq
+   ```
+2) Specify `github` server with your credentials in `settings.xml` for Apache Maven. See GitHub [docs](https://docs.github.com/en/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#about-personal-access-tokens) how to generate personal token.
 
+   - settings.xml are located in `~/.m2` directory.
+      ```xml
+      <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                        http://maven.apache.org/xsd/settings-1.0.0.xsd">
+   
+      <servers>
+          <server>
+              <id>github</id>
+              <username>GITHUB_LOGIN_USERNAME</username>
+              <password>GITHUB_TOKEN</password>
+          </server>
+      </servers>
+   
+      </settings>
+      ```
+
+   Token  should have `read:packages` scope.
+
+3) Clone source code:
+   ```shell
+   git clone https://github.com/manavchaudhary1/TeleFetch.git
+   cd TeleFetch
+   ```
 
 4) Install mvn repo
-```bash
-mvn clean install
-```
+   ```bash
+   mvn clean install
+   ```
 
-> pom is configured for linux_x64 OS.
-
-You can find compiled libraries for several platforms in [libs](https://github.com/manavchaudhary1/TeleFetch/tree/master/libs) directory of the source code from the latest release.
-If you haven't found a library for your OS and architecture, you can build it yourself following this [instructions](https://github.com/p-vorobyev/spring-boot-starter-telegram/blob/master/libs/build/readme.md).
+You can find scripts to build libraries for several platforms in [libs](https://github.com/manavchaudhary1/TeleFetch/tree/master/libs/build) directory of the source code from the latest release.
+If you haven't found a library for your OS and architecture, you can build it yourself following this [instructions](https://github.com/manavchaudhary1/TeleFetch/tree/master/libs/build/readme.md).
 
 
-<a name="configuration"></a>
+<a name="configuration-properties"></a>
 ## Configuration properties
 
 
@@ -90,13 +109,21 @@ bash edit_entries.sh
 | `${TELEGRAM_ENCRYPTION_KEY}` | String | Encryption key for the database. If the encryption key is invalid, then an error with code 401 will be returned. |
 
 
-<a name="login"></a>
+<a name="login-and-authorization"></a>
 ## Login and Authorization
 
 Run TeleFetch :
 ```
-mvn spring-boot:run 
+mvn spring-boot:run  -P <OS-Arch-declared-in-pom.xml>
 ```
+
+| OS-Arch        | Declared in pom.xml |
+|----------------|---------------------|
+| Linux-arm      | linux-arm64         |
+| Linux-x86_64   | linux-x64           |
+| MAC os aarch   | macos-silicon       |
+| MAC os x86_64  | macos-x64           |   
+| Windows-x86_64 | windows-x64         |
 
 - application log
 
@@ -126,7 +153,7 @@ curl -X GET http://localhost:8080/api/authorization/status
 
 Now we are ready to fetch chat history and download files from telegram.
 We can either use api calls or use web interface to download files.
-Head over to [http://localhost:8080](http://localhost:8080) to use web interface and for api calls refer [Api calls](#api).
+Head over to [http://localhost:8080](http://localhost:8080) to use web interface and for api calls refer [Api calls](#running-api-calls).
 
 **Getting chat id:**
 
@@ -139,7 +166,7 @@ Head over to [http://localhost:8080](http://localhost:8080) to use web interface
     - `https://web.telegram.org/?legacy=1#/im?p=c1301254321_6925449697188775560` here take `1301254321` and add `-100` to the start of the id => `-1001301254321`.
 
 **2. Using Telegram Desktop Client**
-1. Open Any Telegram CLient ; i personally recommend [64Gram](https://github.com/TDesktop-x64/tdesktop).
+1. Open Any Telegram Client ; i personally recommend [64Gram](https://github.com/TDesktop-x64/tdesktop).
 2. Open Channel you want to download documents from
 
    ![](https://github.com/manavchaudhary1/TeleFetch/blob/master/img/example.png)
@@ -151,7 +178,7 @@ Head over to [http://localhost:8080](http://localhost:8080) to use web interface
 3. We can search and copy ChatId from here and head to [localhost:8080/download](https://localhost:8008/download) and start downloading chats.
 
 
-<a name="api"></a>
+<a name="running-api-calls"></a>
 ## Running Api calls
 
 1) Fetching Chat History
@@ -204,6 +231,7 @@ bash {script_name}.sh
 Enter fileIds separated by space:
 12345 67890 11223
 ```
+
 3) Checking Download Progress
 
 After initiating downloading file , we can check download progress , using:
