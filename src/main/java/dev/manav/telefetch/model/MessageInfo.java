@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MessageInfo {
+    private long messageId;
     private int id;
     private String filename;
     private String mimeType;
@@ -14,7 +15,8 @@ public class MessageInfo {
     @Setter
     private double progress;
 
-    public MessageInfo(int id, String filename, String mimeType, long sizeInBytes, String caption) {
+    public MessageInfo(long messageId,int id, String filename, String mimeType, long sizeInBytes, String caption) {
+        this.messageId = messageId;
         this.id = id;
         this.filename = filename;
         this.mimeType = mimeType;

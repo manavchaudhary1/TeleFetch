@@ -3,12 +3,10 @@ package dev.manav.telefetch.service;
 import dev.manav.telefetch.model.ChatHistoryTemplate;
 import dev.manav.telefetch.model.ChatResponse;
 import dev.manav.telefetch.model.MessageInfo;
-import dev.voroby.springframework.telegram.client.TdApi;
+import org.drinkless.tdlib.TdApi;
 import dev.voroby.springframework.telegram.client.TelegramClient;
 import dev.voroby.springframework.telegram.exception.TelegramClientTdApiException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,11 +22,11 @@ public class ChatHistoryService {
         this.telegramClient = telegramClient;
     }
 
-    public ChatResponse getChatHistory(ChatHistoryTemplate chatHistoryTemplate) {
+    public ChatResponse getChatHistory(ChatHistoryTemplate chatHistoryTemplate) throws RuntimeException {
         log.info("Fetching chat history for chatId: {}", chatHistoryTemplate.getChatId());
         updateChatList();
 
-        TdApi.GetChatHistory request = new TdApi.GetChatHistory(chatHistoryTemplate.getChatId(), 0, 0, chatHistoryTemplate.getLimit(), false);
+        TdApi.GetChatHistory request = new TdApi.GetChatHistory(chatHistoryTemplate.getChatId(), chatHistoryTemplate.getFromMessageId(), 0, chatHistoryTemplate.getLimit(), false);
         try {
             TdApi.Messages messages = telegramClient.sendSync(request);
             List<MessageInfo> filteredMessages = filterMessages(messages);
@@ -36,7 +34,7 @@ public class ChatHistoryService {
             return new ChatResponse(totalCount, filteredMessages);
         } catch (TelegramClientTdApiException e) {
             log.error("Error fetching chat history: {}", e.getMessage(), e);
-            throw new RuntimeException("Error fetching chat history", e); // or handle accordingly
+            throw new RuntimeException("Error fetching chat history", e);
         }
     }
 
@@ -44,6 +42,7 @@ public class ChatHistoryService {
         List<MessageInfo> filteredMessages = new ArrayList<>();
 
         for (TdApi.Message message : messages.messages) {
+            long messageId = message.id;
             if (message.content instanceof TdApi.MessageDocument documentContent) {
                 TdApi.Document document = documentContent.document;
 
@@ -53,7 +52,7 @@ public class ChatHistoryService {
                 long size = document.document.size;
                 String caption = documentContent.caption.text;
 
-                filteredMessages.add(new MessageInfo(documentId, filename, mimeType, size, caption));
+                filteredMessages.add(new MessageInfo(messageId, documentId, filename, mimeType, size, caption));
             } else if (message.content instanceof TdApi.MessageVideo videoContent) {
                 TdApi.Video video = videoContent.video;
 
@@ -63,7 +62,7 @@ public class ChatHistoryService {
                 long size = video.video.size;
                 String caption = videoContent.caption.text;
 
-                filteredMessages.add(new MessageInfo(videoId, filename, mimeType, size, caption));
+                filteredMessages.add(new MessageInfo(messageId, videoId, filename, mimeType, size, caption));
             }
         }
 
